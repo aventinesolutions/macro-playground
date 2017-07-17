@@ -1,4 +1,5 @@
-(ns macro-playground.core)
+(ns macro-playground.core
+  (require [clojure.pprint :as p]))
 
 (defmacro square [x]
   `(let [x# ~x]
@@ -55,8 +56,8 @@
            `([~@(take n syms)] (~m ~@(take n syms)))))))
 
 (defn -main []
-  (println (macroexpand-1 '(regex #"a(bc)" "abc" (println %0)(println %1))))
-  (println (macroexpand '(regex #"([aA]ve)" "Aventine Solutions (matthew.eichler@aventinesolutions.nl" (println %0)(println %1))))
+  (p/pprint (macroexpand-1 '(regex #"a(bc)" "abc" (println %0)(println %1))))
+  (p/pprint (macroexpand '(regex #"([aA]ve)" "Aventine Solutions (matthew.eichler@aventinesolutions.nl" (println %0)(println %1))))
   (println (regex #"([aA]ve)" "Aventine Solutions (matthew.eichler@aventinesolutions.nl" (println %0)(println %1))))
 
 
