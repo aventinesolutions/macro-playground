@@ -58,6 +58,7 @@
 (defn -main []
   (p/pprint (macroexpand-1 '(regex #"a(bc)" "abc" (println %0)(println %1))))
   (p/pprint (macroexpand '(regex #"([aA]ve)" "Aventine Solutions (matthew.eichler@aventinesolutions.nl" (println %0)(println %1))))
-  (println (regex #"([aA]ve)" "Aventine Solutions (matthew.eichler@aventinesolutions.nl" (println %0)(println %1))))
+  (println (regex #"([aA]ve)" "Aventine Solutions (matthew.eichler@aventinesolutions.nl" (println %0)(println %1)))
+  (p/pprint (macroexpand-1 '(with-open* [in (clojure.java.io/input-stream (clojure.java.io/file "/tmp/test.txt"))](println (slurp in))))))
 
 
