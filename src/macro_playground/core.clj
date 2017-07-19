@@ -48,12 +48,17 @@
          ~@(for [[sym _] (reverse (partition 2 bindings))]
              `(.close ~sym))))))
 
-(defmacro mf [m]
-  (let [letters "abcdefghijklmnop"
-        syms (map (comp gensym str) letters)]
-    `(fn
-       ~@(for [n (range (inc (count letters)))]
-           `([~@(take n syms)] (~m ~@(take n syms)))))))
+;; (mf or) => (fn [a b] (or a b))
+
+;; (defmacro mf [m]
+;;   (let [letters "abcdefghijklmnop"
+;;         syms (map (comp gensym str) letters)]
+;;     `(fn
+;;        ~@(for [n (range (inc (count letters)))]
+;;            `([~@(take n syms)] (~m ~@(take n syms)))))))
+
+(defmacro mf "macro as a function" [m]
+  '(fn [a# b#] (or a# b#)))
 
 (defn -main []
   (p/pprint (macroexpand-1 '(regex #"a(bc)" "abc" (println %0)(println %1))))
@@ -61,6 +66,6 @@
   (println (regex #"([aA]ve)" "Aventine Solutions (matthew.eichler@aventinesolutions.nl" (println %0)(println %1)))
   (p/pprint (macroexpand-1 '(with-open* [in (clojure.java.io/input-stream (clojure.java.io/file "/tmp/test.txt"))](println (slurp in)))))
   (p/pprint (macroexpand-1 '(with-open2* [in (clojure.java.io/input-stream (clojure.java.io/file "/tmp/test.txt"))
-                                          out (clojure.java.io/writer (clojure.java.io/file "/tmp/out.txt"))](println (slurp in))))))
-
+                                          out (clojure.java.io/writer (clojure.java.io/file "/tmp/out.txt"))](println (slurp in))))
+  (p/pprint (macroexpand-1 '(apply (mf or) [false true])))))
 
